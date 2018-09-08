@@ -15,7 +15,7 @@ while true:
   randomize()
 
   # Computer picks
-  let rand_range = ord(low(Choice))..ord(high(Choice));
+  let rand_range = ord(low(Choice))..ord(high(Choice))
   let computer = Choice(rand(rand_range))
 
   # Get validated player input
