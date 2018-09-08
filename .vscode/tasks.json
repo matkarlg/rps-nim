@@ -1,0 +1,13 @@
+{
+    "taskName": "Run rps_nim.nim",
+    "command": "nim",
+    "args": ["c", "-r", "src/rps_nim.nim"],
+    "options": {
+        "cwd": "${workspaceRoot}"
+    },
+    "type": "shell",
+    "group": {
+        "kind": "build",
+        "isDefault": true
+    }
+}
