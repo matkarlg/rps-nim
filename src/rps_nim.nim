@@ -2,6 +2,7 @@ from random import rand, randomize
 from strutils import parseEnum
 
 type Choice {.pure.} = enum Rock, Paper, Scissors
+const choiceRange = ord(low(Choice))..ord(high(Choice))
 
 proc readEnum[T](): T =
   while true:
@@ -14,9 +15,8 @@ while true:
   # Seed random number generator
   randomize()
 
-  # Computer picks
-  let rand_range = ord(low(Choice))..ord(high(Choice))
-  let computer = Choice(rand(rand_range))
+  # Random computer choice
+  let computer = Choice(rand(choiceRange))
 
   # Get validated player input
   echo "Your move: "
