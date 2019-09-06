@@ -35,8 +35,10 @@ install:
     cd ..
 before_script:
     - export PATH="nim-$BRANCH/bin${PATH:+:$PATH}"
+    - echo $CC
+    - nim --version
 script:
-    - nim c --cc:$CC --verbosity:2 src/rps_nim.nim
+    - nim c --cc:$CC --verbosity:2 src/rps_nim
 cache:
   directories:
     - nim-master
