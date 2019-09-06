@@ -10,14 +10,15 @@ matrix:
     - env: CHANNEL=devel
   fast_finish: true
 install:
-  - curl https://nim-lang.org/choosenim/init.sh -sSf > init.sh
-  - sh init.sh -y
-  - export CHOOSENIM_NO_ANALYTICS=1
-  - yes | choosenim $CHANNEL
+  - |
+    curl https://nim-lang.org/choosenim/init.sh -sSf > init.sh
+    sh init.sh -y
 before_script:
+  - export CHOOSENIM_NO_ANALYTICS=1
   - export PATH=$HOME/.nimble/bin:$PATH
-  - nimble refresh
 script:
+  - choosenim $CHANNEL
+  - nimble refresh
   - nim --version
   - nimble build --cc:$CC --debug -d:release
 cache:
