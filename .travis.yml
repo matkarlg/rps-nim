@@ -35,10 +35,9 @@ install:
     cd ..
 before_script:
     - export PATH="nim-$BRANCH/bin${PATH:+:$PATH}"
-    - echo $CC
-    - nim --version
 script:
-    - nim c --cc:$CC --verbosity:2 src/rps_nim
+    - nim --version
+    - nimble build --cc:$CC --debug
 cache:
   directories:
     - nim-master
