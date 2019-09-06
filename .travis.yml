@@ -10,16 +10,19 @@ matrix:
     - env: CHANNEL=devel
   fast_finish: true
 install:
+  - curl https://nim-lang.org/choosenim/init.sh -sSf > init.sh
+  - sh init.sh -y
   - export CHOOSENIM_NO_ANALYTICS=1
+  - yes | choosenim $CHANNEL
+before_script:
   - export PATH=$HOME/.nimble/bin:$PATH
-  - curl -L -o choosenim https://github.com/dom96/choosenim/releases/download/v0.4.0/choosenim-0.4.0_linux_amd64
-  - chmod +x choosenim
-  - ./choosenim $CHANNEL
+  - nimble refresh
 script:
-    - nim --version
-    - nimble build --cc:$CC --debug
+  - nim --version
+  - nimble build --cc:$CC --debug -d:release
 cache:
   directories:
-    - .choosenim
+    - "$HOME/.nimble"
+    - "$HOME/.choosenim"
 notifications:
   email: false
