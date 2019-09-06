@@ -1,46 +1,25 @@
 language: c
 env:
-  # Build and test against the master and devel branches of Nim
-  - BRANCH=master
-  - BRANCH=devel
+  - CHANNEL=stable
+  - CHANNEL=devel
 compiler:
-  # Build and test using both gcc and clang
   - gcc
   - clang
 matrix:
   allow_failures:
-    # Ignore failures when building against the devel Nim branch
-    - env: BRANCH=devel
+    - env: CHANNEL=devel
   fast_finish: true
 install:
-  - |
-    if [ ! -x nim-$BRANCH/bin/nim ]; then
-      git clone -b $BRANCH --depth 1 git://github.com/nim-lang/nim nim-$BRANCH/
-      cd nim-$BRANCH
-      git clone --depth 1 git://github.com/nim-lang/csources csources/
-      cd csources
-      sh build.sh
-      cd ..
-      rm -rf csources
-      bin/nim c koch
-      ./koch boot -d:release
-    else
-      cd nim-$BRANCH
-      git fetch origin
-      if ! git merge FETCH_HEAD | grep "Already up-to-date"; then
-        bin/nim c koch
-        ./koch boot -d:release
-      fi
-    fi
-    cd ..
-before_script:
-    - export PATH="nim-$BRANCH/bin${PATH:+:$PATH}"
+  - export CHOOSENIM_NO_ANALYTICS=1
+  - export PATH=$HOME/.nimble/bin:$PATH
+  - curl -L -o choosenim https://github.com/dom96/choosenim/releases/download/v0.4.0/choosenim-0.4.0_linux_amd64
+  - chmod +x choosenim
+  - ./choosenim $CHANNEL
 script:
     - nim --version
     - nimble build --cc:$CC --debug
 cache:
   directories:
-    - nim-master
-    - nim-devel
+    - .choosenim
 notifications:
   email: false
